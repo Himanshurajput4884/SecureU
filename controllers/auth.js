@@ -13,7 +13,6 @@ const db = mysql.createConnection({
 
 
 exports.register = (req, res) => {
-    console.log(req.body);
 
     const name = req.body.name;
     const email = req.body.email;
@@ -45,10 +44,8 @@ exports.register = (req, res) => {
                 console.log(err);
             }
             else{
-                console.log(results);
-                return res.render('register', {
-                    message:'Registered Successfully.'
-                })
+                console.log('Register Successfully.');
+                return res.render('login')
             }
         })
 

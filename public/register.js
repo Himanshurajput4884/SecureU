@@ -53,7 +53,7 @@ function validateform(){
 
     var password = document.forms['MyForm']["password"].value;
     if(password.length <= 8){
-        seterror("fpass", " **PassWord must contain more tha 8 digits.");
+        seterror("fpass", " **PassWord must contain more than 8 Digits.");
         returnval = false;
     }
     if(!isCase(password)){

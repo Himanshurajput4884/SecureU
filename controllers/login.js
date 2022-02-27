@@ -12,13 +12,12 @@ const db = mysql.createConnection({
 
 
 exports.login = (req, res) => {
-    console.log(req.body);
+    
 
     const email = req.body.email;
     const password = req.body.password;
 
     db.query('SELECT * FROM USERS WHERE EMAIL=?', [email], async (err, results, fields)=>{
-        console.log(results);
         if(err){
             console.log(err);
         }       
@@ -26,6 +25,7 @@ exports.login = (req, res) => {
         {
             const comparison = bcrypt.compare(password, results[0].password);
             if(comparison){
+                console.log('Login Successfully.');
                 return res.render('user', {
                     message: results[0].name
                 });
