@@ -67,11 +67,11 @@ function validateform(){
 
     var cpass = document.forms['MyForm']["cpassword"].value;
     if(cpass.length == 0){
-        seterror("fname", " **This space can't leave Blank.");
+        seterror("fname", " **This space can't be leave blank. Fill it for continue.");
         returnval = false;
     }
     if(!cpass.match(password)){
-        seterror("fcpass", " **Confirm Password should match Password.");
+        seterror("fcpass", " **Confirm Password is not match with Password.");
         returnval = false;
     }
     return returnval;
