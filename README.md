@@ -5,6 +5,7 @@ A simple Full Stack Project to Implement Login and Register Using NodeJs, Expres
 3. There are some Protecting routes which prevent user to access without Register/Login.
 4. Handlebars  is used as a Templating Language.
 5. Logged In User can see registered name on every page.
+6. Logged In User can get direct access to their account until he log-out from the website.
 
 
 
