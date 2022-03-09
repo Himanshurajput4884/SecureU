@@ -1,6 +1,10 @@
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser');
+const dotenv = require("dotenv");
+
+dotenv.config({ path: './.env'});
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -11,36 +15,43 @@ const db = mysql.createConnection({
 
 
 
+
+exports.logout = (req, res)=>{    
+    res.cookie('jwt', '', { maxAge:1 });
+    res.redirect('/');    
+}
+
+
 exports.login = (req, res) => {
-    
 
     const email = req.body.email;
     const password = req.body.password;
 
+    
+    const maxAge = 3*24*60*60;       // here is seconds.
     db.query('SELECT * FROM USERS WHERE EMAIL=?', [email], async (err, results, fields)=>{
         if(err){
             console.log(err);
         }       
         else if(results.length > 0)
         {
-            const comparison = bcrypt.compare(password, results[0].password);
+            const comparison = await bcrypt.compare(password, results[0].password); 
             if(comparison){
-                console.log('Login Successfully.');
-                return res.render('user', {
-                    message: results[0].name
-                });
+                
+                    const token = jwt.sign({user_id:results[0].user_id, name:results[0].name},
+                        process.env.SECRET_KEY , { expiresIn:maxAge });
+                res.cookie('jwt', token, { httpOnly:true, maxAge:maxAge*1000 });
+                res.redirect('/user');
             }
             else{
-                res.render('login', {
-                    message: 'Incorrect Email and Password.'
-                });
+                res.redirect('/login');
             }
         }
         else{
-            res.render('login', {
-                message: "Email doesn't Exists."
-            });
+            res.redirect('/login');
         }
     })
     
 }
+
+

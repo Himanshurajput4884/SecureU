@@ -53,7 +53,7 @@ function validateform(){
 
     var password = document.forms['MyForm']["password"].value;
     if(password.length <= 8){
-        seterror("fpass", " **PassWord must contain more than 8 Digits.");
+        seterror("fpass", " **PassWord must contain more tha 8 digits.");
         returnval = false;
     }
     if(!isCase(password)){
@@ -67,12 +67,15 @@ function validateform(){
 
     var cpass = document.forms['MyForm']["cpassword"].value;
     if(cpass.length == 0){
-        seterror("fname", " **This space can't be leave blank. Fill it for continue.");
+        seterror("fname", " **This space can't leave Blank.");
         returnval = false;
     }
     if(!cpass.match(password)){
-        seterror("fcpass", " **Confirm Password is not match with Password.");
+        seterror("fcpass", " **Confirm Password should match Password.");
         returnval = false;
     }
+
+    
+
     return returnval;
 }
